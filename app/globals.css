@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* значения в формате "R G B" — нужен для модификаторов прозрачности Tailwind (bg-bg-primary/80 и т.д.) */
+  --bg-primary: 14 15 16;
+  --bg-secondary: 22 24 25;
+  --bg-card: 29 32 33;
+  --bg-card-hover: 36 40 41;
+  --stroke-subtle: 42 46 48;
+  --text-primary: 244 245 245;
+  --text-secondary: 155 161 163;
+  --text-tertiary: 95 101 103;
+  --accent-lime: 181 224 36;
+  --accent-lime-hover: 198 238 63;
+  --accent-lime-pressed: 156 196 29;
+  --accent-on-lime: 14 15 16;
+  --state-error: 229 72 77;
+  --state-success: 70 167 88;
+}
+
+* {
+  border-color: rgb(var(--stroke-subtle));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--text-primary));
+  background: rgb(var(--bg-primary));
+  font-family: var(--font-body), sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading), sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: rgb(var(--accent-lime));
+  color: rgb(var(--accent-on-lime));
+}
