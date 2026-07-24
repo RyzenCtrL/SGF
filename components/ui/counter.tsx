@@ -52,18 +52,37 @@ export function Counter({
 
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          run();
-          io.disconnect();
-        }
-      },
-      { rootMargin: "-80px" }
-    );
+
+    // IntersectionObserver — основной способ запуска, но в некоторых
+    // мобильных браузерах/встроенных WebView (мессенджеры, MIUI и т.п.)
+    // он изредка не срабатывает вовсе, и счётчик навсегда остаётся на 0.
+    // Дублируем проверку через getBoundingClientRect на scroll/resize и
+    // подстраховываем таймером — так итоговое число гарантированно появится
+    // при любом поведении браузера.
+    const isVisible = () => {
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > 0;
+    };
+    const check = () => {
+      if (isVisible()) run();
+    };
+
+    check();
+
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) run();
+    });
     io.observe(el);
+
+    window.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check);
+    const fallback = window.setTimeout(run, 4000);
+
     return () => {
       io.disconnect();
+      window.removeEventListener("scroll", check);
+      window.removeEventListener("resize", check);
+      window.clearTimeout(fallback);
       cancelAnimationFrame(raf);
     };
   }, [value, reduced, startOnMount]);
