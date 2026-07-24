@@ -1,0 +1,12 @@
+.specular-rim-fx {
+  position: absolute;
+  inset: -20px;
+  z-index: 21;
+  pointer-events: none;
+}
+
+.specular-rim-fx canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

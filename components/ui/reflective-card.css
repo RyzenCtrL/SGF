@@ -1,0 +1,225 @@
+.reflective-card-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgb(var(--bg-card));
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reflective-card-container.is-hovering {
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.5),
+    0 0 50px -14px rgba(181, 224, 36, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+/* Статичный градиент вместо видео с вебкамеры оригинального компонента. */
+.reflective-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 120% at 15% 0%, rgba(181, 224, 36, 0.2), transparent 55%),
+    linear-gradient(160deg, rgb(38 42 43) 0%, rgb(20 22 23) 55%, rgb(12 13 14) 100%);
+}
+
+.reflective-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: var(--roughness, 0.25);
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.reflective-sheen {
+  position: absolute;
+  inset: -20%;
+  z-index: 2;
+  background: linear-gradient(
+    135deg,
+    rgba(244, 245, 245, 0.22) 0%,
+    rgba(244, 245, 245, 0.05) 36%,
+    rgba(244, 245, 245, 0) 50%,
+    rgba(181, 224, 36, 0.14) 64%,
+    rgba(181, 224, 36, 0.32) 100%
+  );
+  background-size: 220% 220%;
+  background-position: 15% 15%;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: var(--metalness, 0.6);
+  transition: background-position 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reflective-card-container:hover .reflective-sheen {
+  background-position: 85% 85%;
+}
+
+/* Лаймовый блик, идущий за курсором мыши */
+.reflective-cursor-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    320px circle at var(--cx, 50%) var(--cy, 50%),
+    rgba(181, 224, 36, 0.55),
+    rgba(181, 224, 36, 0.15) 45%,
+    transparent 72%
+  );
+}
+
+.reflective-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(244, 245, 245, 0.3) 0%,
+    rgba(181, 224, 36, 0.22) 50%,
+    rgba(244, 245, 245, 0.2) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.reflective-content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  color: rgb(var(--text-primary));
+}
+
+.rc-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: -10px -10px 0;
+  padding: 10px 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(to bottom, rgba(8, 9, 9, 0.28), rgba(8, 9, 9, 0));
+  backdrop-filter: blur(3px);
+}
+
+.rc-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--text-secondary));
+}
+
+.rc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgb(var(--accent-lime));
+  box-shadow: 0 0 8px rgba(181, 224, 36, 0.7);
+}
+
+.rc-status-icon {
+  color: rgb(var(--accent-lime));
+  opacity: 0.7;
+}
+
+.rc-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rc-monogram {
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(2.25rem, 1.9rem + 1.2vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgb(var(--text-primary));
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(181, 224, 36, 0.3);
+}
+
+.rc-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 0 -10px -10px;
+  padding: 14px 10px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(to top, rgba(8, 9, 9, 0.55), rgba(8, 9, 9, 0));
+  backdrop-filter: blur(4px);
+  gap: 12px;
+}
+
+.rc-id-section {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rc-label {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--text-tertiary));
+}
+
+.rc-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(var(--text-primary));
+}
+
+.rc-role {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: rgb(var(--text-secondary));
+}
+
+.rc-verified-icon {
+  flex-shrink: 0;
+  color: rgb(var(--accent-lime));
+  opacity: 0.55;
+}

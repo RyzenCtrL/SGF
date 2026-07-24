@@ -46,7 +46,7 @@ export function Hero() {
       {/* Фон: статичное фото объекта */}
       <div className="absolute inset-0">
         <Image
-          src="/images/hero/hero-night-gym.png"
+          src="/images/hero/hero-night-gym.webp"
           alt="Уличная спортивная площадка Street Gym Factory ночью"
           fill
           priority
