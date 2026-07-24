@@ -6,6 +6,8 @@ import { FileText, X } from "lucide-react";
 import { certificates, warranties } from "@/lib/certificates-data";
 import { Reveal, RevealItem } from "@/components/ui/reveal";
 import { SectionKicker } from "@/components/ui/section-kicker";
+import { Counter } from "@/components/ui/counter";
+import "@/components/ui/glare-hover.css";
 
 export function Documents() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -41,12 +43,28 @@ export function Documents() {
           {warranties.map((item) => (
             <div
               key={item.label}
-              className="flex flex-col gap-2 rounded-card border border-stroke-subtle bg-bg-card p-6"
+              className="glare-hover group flex flex-col gap-4 rounded-card border border-stroke-subtle bg-bg-card p-6 transition-colors duration-500 ease-smooth hover:border-accent-lime/30"
+              style={
+                {
+                  "--gh-angle": "-45deg",
+                  "--gh-rgba": "rgba(181, 224, 36, 0.28)",
+                  "--gh-size": "220%",
+                  "--gh-duration": "800ms",
+                } as React.CSSProperties
+              }
             >
-              <span className="text-h2 font-heading tabular-nums text-accent-lime">
-                {item.years}
-              </span>
-              <span className="text-sm text-text-secondary">{item.label}</span>
+              <div className="relative z-10 flex h-11 w-11 items-center justify-center rounded-control border border-accent-lime/20 bg-accent-lime/10 transition-colors duration-500 ease-smooth group-hover:border-accent-lime/40 group-hover:bg-accent-lime/15">
+                <item.icon size={20} className="text-accent-lime" strokeWidth={1.75} />
+              </div>
+              <div className="relative z-10 flex flex-col gap-1">
+                <span className="flex items-baseline gap-1.5">
+                  <span className="text-h2 font-heading tabular-nums text-accent-lime">
+                    <Counter value={item.years} />
+                  </span>
+                  <span className="font-heading text-lg text-text-primary">{item.unit}</span>
+                </span>
+                <span className="text-sm text-text-secondary">{item.label}</span>
+              </div>
             </div>
           ))}
         </div>

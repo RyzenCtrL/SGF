@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, MessageCircle, Send } from "lucide-react";
+import { MessageCircle, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +10,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { SectionKicker } from "@/components/ui/section-kicker";
 import { FloatingPathsBackground } from "@/components/ui/floating-paths";
 import { FormProgressBar } from "@/components/ui/form-progress-bar";
+import { FormSuccess } from "@/components/ui/form-success";
 import { siteConfig } from "@/lib/site-config";
 
 const afterSubmitSteps = [
@@ -76,13 +77,7 @@ export function FinalCta() {
 
           <Reveal className="rounded-card border border-stroke-subtle bg-bg-card/95 p-6 backdrop-blur md:p-8">
             {submitted ? (
-              <div className="flex h-full flex-col items-center justify-center gap-3 py-10 text-center">
-                <Check className="text-accent-lime" size={32} />
-                <p className="text-h3 font-heading text-text-primary">Заявка отправлена</p>
-                <p className="text-sm text-text-secondary">
-                  Мы свяжемся с вами в течение 30 минут в рабочее время.
-                </p>
-              </div>
+              <FormSuccess name={name} phone={phone} />
             ) : (
               <form
                 onSubmit={(e) => {

@@ -1,0 +1,96 @@
+.pill-nav {
+  --nav-h: 44px;
+  --pill-pad-x: 20px;
+  --pill-gap: 2px;
+  display: inline-flex;
+  align-items: center;
+  height: var(--nav-h);
+  padding: 3px;
+  box-sizing: border-box;
+  border: 1px solid rgb(var(--stroke-subtle));
+  border-radius: 9999px;
+  background: rgb(var(--bg-card) / 0.5);
+  backdrop-filter: blur(6px);
+}
+
+.pill-list {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  gap: var(--pill-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pill-list > li {
+  display: flex;
+  height: 100%;
+}
+
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 var(--pill-pad-x);
+  overflow: hidden;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 0;
+  color: rgb(var(--text-secondary));
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.pill:hover {
+  color: rgb(var(--text-primary));
+}
+
+.pill.is-active {
+  color: rgb(var(--text-primary));
+  background: rgb(var(--accent-lime) / 0.1);
+}
+
+.pill .hover-circle {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 1;
+  display: block;
+  border-radius: 50%;
+  background: rgb(var(--accent-lime));
+  pointer-events: none;
+  will-change: transform;
+}
+
+.pill .label-stack {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  line-height: 1;
+}
+
+.pill .pill-label {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  line-height: 1;
+  will-change: transform;
+}
+
+.pill .pill-label-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: inline-block;
+  color: rgb(var(--accent-on-lime));
+  will-change: transform, opacity;
+}

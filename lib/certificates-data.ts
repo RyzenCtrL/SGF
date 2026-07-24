@@ -1,3 +1,5 @@
+import { Flame, PaintBucket, Droplets, LifeBuoy } from "lucide-react";
+
 // TODO: заменить плейсхолдеры на сканы реальных сертификатов и деклараций соответствия
 export const certificates = [
   { title: "Сертификат соответствия ГОСТ Р 52301-2013", code: "№ РОСС RU.—" },
@@ -9,8 +11,28 @@ export const certificates = [
 ] as const;
 
 export const warranties = [
-  { years: "5 лет", label: "на металлоконструкции и сварные соединения" },
-  { years: "3 года", label: "на порошковую окраску" },
-  { years: "2 года", label: "на резиновые и наливные покрытия" },
-  { years: "1 год", label: "бесплатное сервисное обслуживание" },
+  {
+    icon: Flame,
+    years: 5,
+    unit: "лет",
+    label: "на металлоконструкции и сварные соединения",
+  },
+  {
+    icon: PaintBucket,
+    years: 3,
+    unit: "года",
+    label: "на порошковую окраску",
+  },
+  {
+    icon: Droplets,
+    years: 2,
+    unit: "года",
+    label: "на резиновые и наливные покрытия",
+  },
+  {
+    icon: LifeBuoy,
+    years: 1,
+    unit: "год",
+    label: "бесплатное сервисное обслуживание",
+  },
 ] as const;

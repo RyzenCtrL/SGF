@@ -2,10 +2,48 @@
 
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
+import { ArrowLeft, ArrowRight, Package, Quote } from "lucide-react";
 import { testimonials } from "@/lib/testimonials-data";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionKicker } from "@/components/ui/section-kicker";
+import { CardShine } from "@/components/ui/card-shine";
+
+type Testimonial = (typeof testimonials)[number];
+
+function TestimonialCard({ item }: { item: Testimonial }) {
+  return (
+    <div className="group relative h-full transition-transform duration-700 ease-smooth will-change-transform hover:-translate-y-1.5">
+      {/* Скругление и overflow-hidden — на неподвижном слое: если повесить их
+          на тот же элемент, что и hover-transform, часть браузеров на время
+          анимации не успевает пересчитать клип и угол на миг остаётся острым. */}
+      <div className="relative flex h-full flex-col gap-6 overflow-hidden rounded-card border border-stroke-subtle bg-bg-card p-8 transition-all duration-700 ease-smooth group-hover:border-accent-lime/40 group-hover:shadow-[0_0_60px_-18px_rgba(181,224,36,0.35)]">
+        <CardShine />
+
+        <div className="relative z-10 flex items-center justify-between">
+          <Quote className="text-accent-lime" size={28} strokeWidth={1.5} />
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-stroke-subtle bg-bg-secondary/80 px-3 py-1 text-xs text-text-secondary">
+            <Package size={12} className="text-accent-lime" />
+            {item.order}
+          </span>
+        </div>
+
+        <p className="relative z-10 flex-1 text-body text-text-secondary">{item.quote}</p>
+
+        <div className="relative z-10 flex items-center gap-3 border-t border-stroke-subtle pt-5">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-bg-secondary font-heading text-sm text-text-primary">
+            {item.name.charAt(0)}
+          </span>
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-text-primary">{item.name}</span>
+            <span className="text-xs text-text-secondary">
+              {item.role} · {item.city}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Testimonials() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
@@ -54,27 +92,13 @@ export function Testimonials() {
         </div>
 
         <div className="mt-10 overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-6">
+          <div className="flex gap-6 py-3">
             {testimonials.map((item) => (
               <div
                 key={item.name}
                 className="min-w-0 flex-[0_0_100%] sm:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(33.333%-16px)]"
               >
-                <div className="flex h-full flex-col gap-6 rounded-card border border-stroke-subtle bg-bg-card p-8">
-                  <Quote className="text-accent-lime" size={28} strokeWidth={1.5} />
-                  <p className="flex-1 text-body text-text-secondary">{item.quote}</p>
-                  <div className="flex items-center gap-3 border-t border-stroke-subtle pt-5">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-bg-secondary font-heading text-sm text-text-primary">
-                      {item.name.charAt(0)}
-                    </span>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-text-primary">{item.name}</span>
-                      <span className="text-xs text-text-secondary">
-                        {item.role} · {item.city}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <TestimonialCard item={item} />
               </div>
             ))}
           </div>

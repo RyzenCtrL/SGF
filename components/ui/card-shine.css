@@ -1,0 +1,39 @@
+.card-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.card-shine-surface {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 120% at 15% 0%, rgba(181, 224, 36, 0.12), transparent 55%),
+    linear-gradient(160deg, rgb(38 42 43 / 0.55) 0%, rgb(20 22 23 / 0.35) 55%, transparent 100%);
+}
+
+.card-shine-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(244, 245, 245, 0.16) 0%,
+    rgba(244, 245, 245, 0.04) 36%,
+    rgba(244, 245, 245, 0) 50%,
+    rgba(181, 224, 36, 0.1) 64%,
+    rgba(181, 224, 36, 0.24) 100%
+  );
+  background-size: 220% 220%;
+  background-position: 15% 15%;
+  mix-blend-mode: overlay;
+  opacity: var(--cs-metalness, 0.5);
+  transition: background-position 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .card-shine-sheen {
+  background-position: 85% 85%;
+}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Menu, Phone } from "lucide-react";
 import { navLinks } from "@/lib/nav";
 import { siteConfig } from "@/lib/site-config";
@@ -9,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { MobileNav } from "./mobile-nav";
 import { Logo } from "./logo";
+import { PillNav } from "./pill-nav";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -42,17 +42,7 @@ export function Header() {
       <div className="mx-auto flex h-full max-w-container items-center justify-between px-5 md:px-8 lg:px-10">
         <Logo />
 
-        <nav className="hidden items-center gap-8 lg:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-text-secondary transition-colors duration-200 hover:text-text-primary"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <PillNav items={navLinks} className="hidden lg:inline-flex" />
 
         <div className="hidden items-center gap-6 lg:flex">
           <a
