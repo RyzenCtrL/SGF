@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Street Gym Factory
 
-## Getting Started
+Сайт производителя уличных спортивных площадок: каталог оборудования, кейсы
+реализованных объектов, производство, документы и заявка на расчёт проекта.
 
-First, run the development server:
+**Демо:** https://sgf-i66u.vercel.app
+
+> Учебно-портфолийный проект. Компания, реквизиты, цены, кейсы, отзывы и номера
+> сертификатов — вымышленные; данные подобраны правдоподобно, чтобы проверить
+> вёрстку и подачу на реальном объёме контента. Все константы вынесены в
+> `lib/site-config.ts` и файлы данных в `lib/` — замена на боевые данные
+> делается в одном месте, без правок разметки.
+
+## Стек
+
+| | |
+|---|---|
+| Фреймворк | Next.js 14 (App Router, RSC) |
+| Язык | TypeScript (strict) |
+| Стили | Tailwind CSS, дизайн-токены в `app/globals.css` |
+| Анимации | Framer Motion, GSAP, OGL (WebGL-сетка в первом экране) |
+| Слайдеры | Embla Carousel |
+| Иконки | lucide-react |
+| Хостинг | Vercel |
+
+## Что внутри
+
+- **9 страниц** и 37 предрендеренных маршрутов: главная, каталог с фильтрами и
+  карточками товаров, проекты с кейсами, производство, о компании, контакты,
+  политика конфиденциальности, 404.
+- **Дизайн-система:** тёмная тема, единая шкала типографики (`text-display`,
+  `text-h1`…), скругления, отступы секций и токены цвета — всё через
+  Tailwind-конфиг, никаких «магических» значений в разметке.
+- **Доступность:** корректная иерархия заголовков, `alt` у всех изображений,
+  видимый focus-ring, поддержка `prefers-reduced-motion` — все анимации
+  отключаются системной настройкой пользователя.
+- **Производительность:** `next/image` с адаптивным `sizes` и blur-плейсхолдером,
+  статическая генерация страниц каталога и проектов, шрифты через `next/font`.
+- **SEO-разметка:** метаданные на каждой странице, OG- и Twitter-картинки и
+  favicon генерируются на лету (`app/opengraph-image.tsx`, `app/icon.tsx`).
+- **PDF-каталог:** `public/catalog.pdf` собирается скриптом из тех же данных, что
+  и каталог на сайте, — цены на сайте и в прайсе не расходятся.
+
+## Запуск
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # продакшен-сборка
+npm run lint    # ESLint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Структура
 
-## Learn More
+```
+app/                 маршруты App Router, метаданные, генерация OG-картинок
+components/
+  layout/            шапка, подвал, мобильная навигация, sticky-CTA
+  sections/          секции страниц (hero, каталог, кейсы, отзывы, FAQ, формы)
+  ui/                переиспользуемые примитивы и визуальные эффекты
+lib/                 данные каталога, проектов, отзывов, FAQ + конфиг и утилиты
+public/images/       изображения оборудования и объектов
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Замена демо-данных на реальные
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. `lib/site-config.ts` — название, телефон, почта, адрес, ИНН/ОГРН, статистика.
+2. `lib/catalog-data.ts` — позиции каталога, цены, характеристики, фото.
+3. `lib/projects-data.ts`, `lib/testimonials-data.ts`, `lib/faq-data.ts` — кейсы,
+   отзывы, вопросы.
+4. `lib/certificates-data.ts` — документы; сканы положить в `public/`.
+5. `components/sections/contact-form.tsx` — форма сейчас показывает экран успеха
+   без отправки; подключается к почте, CRM или Telegram-боту через route handler.

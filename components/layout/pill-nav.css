@@ -2,7 +2,9 @@
   --nav-h: 44px;
   --pill-pad-x: 20px;
   --pill-gap: 2px;
-  display: inline-flex;
+  /* display управляется только Tailwind-классами на компоненте
+     (hidden lg:inline-flex) — жёсткое правило здесь перебивало бы их
+     на мобильных из-за равного приоритета селекторов. */
   align-items: center;
   height: var(--nav-h);
   padding: 3px;

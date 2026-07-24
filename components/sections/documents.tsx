@@ -33,7 +33,9 @@ export function Documents() {
                 className="flex aspect-[3/4] w-full flex-col items-center justify-center gap-3 rounded-card border border-stroke-subtle bg-bg-card p-4 text-center transition-colors duration-200 hover:bg-bg-card-hover"
               >
                 <FileText size={28} className="text-text-secondary" strokeWidth={1.5} />
-                <span className="text-xs text-text-secondary">{cert.code}</span>
+                <span className="break-words text-xs leading-tight text-text-secondary">
+                  {cert.code}
+                </span>
               </button>
             </RevealItem>
           ))}

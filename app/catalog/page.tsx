@@ -99,8 +99,14 @@ export default function CatalogPage({
             <Button href="/contacts#form" variant="primary">
               Получить расчёт проекта
             </Button>
-            {/* TODO: подключить реальный PDF-файл прайс-каталога */}
-            <Button href="/catalog.pdf" variant="secondary" showArrow={false}>
+            <Button
+              href="/catalog.pdf"
+              variant="secondary"
+              showArrow={false}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Скачать PDF-каталог
             </Button>
           </div>

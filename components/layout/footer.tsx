@@ -35,7 +35,9 @@ export function Footer() {
                 <MessageCircle size={16} />
               </a>
               <a
-                href="#"
+                href={siteConfig.vk}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="ВКонтакте"
                 className="flex h-10 w-10 items-center justify-center rounded-control border border-stroke-subtle text-text-secondary transition-colors duration-200 hover:border-accent-lime hover:text-accent-lime"
               >

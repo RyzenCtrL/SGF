@@ -78,8 +78,14 @@ export function CatalogShowcase() {
             <Button href="/catalog" variant="primary">
               Весь каталог
             </Button>
-            {/* TODO: подключить реальный PDF-файл прайс-каталога */}
-            <Button href="/catalog.pdf" variant="secondary" showArrow={false}>
+            <Button
+              href="/catalog.pdf"
+              variant="secondary"
+              showArrow={false}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Скачать PDF-каталог
             </Button>
           </div>
